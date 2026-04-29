@@ -1,1 +1,63 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+
+
+// LIGHT THEME (Default)
+
+body.theme-light {
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --primary-alpha: rgba(59, 130, 246, 0.15);
+
+
+  --bg-primary: #f1f5f9;
+  --bg-secondary: #ffffff;
+  --card-bg: #ffffff;
+
+
+  --header-bg: rgba(255, 255, 255, 0.9);
+  --input-bg: #ffffff;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+
+
+  --border-color: #e2e8f0;
+  --shadow-color: rgba(0, 0, 0, 0.08);
+
+  --table-header-bg: #f8fafc;
+  --row-hover: #f1f5f9;
+
+
+  --btn-ghost-bg: transparent;
+  --btn-ghost-hover: #f1f5f9;
+
+}
+
+body.theme-dark {
+  --primary: #60a5fa;
+  --primary-dark: #3b82f6;
+  --primary-alpha: rgba(96,165,250, 0.15);
+
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --card-bg: #1e293b;
+
+  --header-bg: rgba(15,23,42, 0.9);
+  --input-bg: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+
+  --border-color: #334155;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+
+  --table-header-bg: #1e293b;
+  --row-hover: #334155;
+
+  --btn-ghost-bg: transparent;
+  --btn-ghost-hover: #334155;
+}
+
+body.theme-dark{
+   
+}
