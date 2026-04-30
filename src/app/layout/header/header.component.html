@@ -1,42 +1,24 @@
 <header class="header" role="banner">
   <div class="header-left">
-
     <span class="material-icons logo">monitoring</span>
-
     <h1 class="header-title">Enterprise Monitoring Dashboard</h1>
-
-
   </div>
-
-  <div class="header-right" (click)="toggleTheme()" class="icon-btn"
-    [attr.aria.label]="(themeService.theme$ | async) === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'  ">
-
-    <span class="material-icons">
-      {{ (themeService.theme$ | async) === 'dark' ? 'light_mode' : 'dark_mode' }}
-
-    </span>
-
-  </div>
-
-
-  <ng-container *ngIf="authService.currentUser$ | async as user">
-
-
-    <div class="user-info">
-
-      <span class="material-icons user-avatar">person</span>
-      <span class="user-name">{{ user.displayName }}</span>
-    </div>
-    <button class="logout-btn" (click)="logout()" aria-label="Sign out">
-
-      <span class="material-icons">logout</span>
-      Sign out
+  <div class="header-right">
+    <button (click)="toggleTheme()" class="icon-btn"
+      [attr.aria.label]="(themeService.theme$ | async) === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'  ">
+      <span class="material-icons">
+        {{ (themeService.theme$ | async) === 'dark' ? 'light_mode' : 'dark_mode' }}
+      </span>
     </button>
-
-
-  </ng-container>
-
-
-
-
+    <ng-container *ngIf="authService.currentUser$ | async as user">
+      <div class="user-info">
+        <span class="material-icons user-avatar">person</span>
+        <span class="user-name">{{ user.displayName }}</span>
+      </div>
+      <button class="logout-btn" (click)="logout()" aria-label="Sign out">
+        <span class="material-icons">logout</span>
+        Sign out
+      </button>
+    </ng-container>
+  </div>
 </header>

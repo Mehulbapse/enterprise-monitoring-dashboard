@@ -1,0 +1,120 @@
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+    height: 60px;
+}
+
+.header-left{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.header-right{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+
+.logo{
+    font-size: 28px;
+    color: var(--primary);
+}
+
+
+.header-title {
+    font-size: 1.125re,;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+
+.icon-btn{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 36px;
+   height: 36px;
+   border: none;
+   border-radius: 8px;
+   background: var(--btn-ghost-bg);
+   color: var(--text-secondary);
+   cursor: pointer;
+   transition: all 0.2s;
+
+}
+
+
+.user-info{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-primary);
+}
+
+.user-avatar{
+  font-size: 28px;
+  color: var(--text-secondary)
+}
+
+.user-name{
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.logout-btn{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    padding: 6px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.8125rem;
+    transition: all 0.2s;
+
+}
+
+
+.logout-btn:hover{
+    color : #dc2626;
+    border-color: #dc2626;
+
+}
+
+
+.logout-btn .material-icons{
+    font-size: 18px;
+}
+
+
+
+
+@media (max-width: 640px) {
+    .header{
+        padding: 0 12px;
+    }
+
+    .logout-btn span:not(.material-icons){
+        display: none;
+    }
+
+    .user-name{
+        display: none;
+    }
+} 
