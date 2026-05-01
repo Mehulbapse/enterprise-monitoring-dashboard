@@ -1,0 +1,19 @@
+
+
+.dashboard{
+
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+
+
+.kpi-row{
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 16px;
+}

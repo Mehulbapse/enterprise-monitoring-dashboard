@@ -2,6 +2,7 @@
 
 import { HttpInterceptorFn, HttpRequest,HttpHandlerFn,HttpResponse } from "@angular/common/http";   
 import { LoginResponse } from "@core/models/auth.model";
+import { KpiData } from "@core/models/dashboard.model";
 import { Observable,of,delay,pipe } from "rxjs";
 
 
@@ -18,6 +19,11 @@ export const mockApiInterceptor: HttpInterceptorFn = (
     if(url.endsWith('/auth/login') && method === 'POST'){
 
         return handleLogin(req);
+    }
+
+
+    if(url.includes('/dashboard/kpi')){
+        return handleKpiData();
     }
 
     return next(req);
@@ -44,3 +50,18 @@ export const mockApiInterceptor: HttpInterceptorFn = (
 
     return of(new HttpResponse({ status: 401, body: null as unknown as LoginResponse})).pipe(delay(500)); 
   }
+
+
+  function handleKpiData(): Observable<HttpResponse<KpiData>> {
+    const kpi : KpiData = {
+      totalAlerts: randomInt(120 , 200),
+      activeUsers: randomInt(800, 15000),
+      systemHealth: randomInt(85, 99),
+      responseTime: randomInt(45, 150)
+    };
+    return of(new HttpResponse({ status: 200, body: kpi })).pipe(delay(200));
+  }
+
+function randomInt(arg0: number, arg1: number) {
+  return Math.floor(Math.random() * (arg1 - arg0 + 1)) + arg0;
+}

@@ -1,14 +1,47 @@
-
-
 <div class="dashboard">
-
-  <div *ngIf="">
-
-  </div>
+  <div *ngIf=""></div>
 
   <!-- KPI Cards Rows -->
-  <section>
+  <section class="kpi-row" aria-label="Key Performance Indicators">
+    <app-kpi-card
+      title="Total Alerts"
+      [value]="kpiData.totalAlerts"
+      icon="notifications_active"
+      colorClass="color-red"
+      format="number"
+      [trend]="-3"
+    >
+    </app-kpi-card>
+
+    <app-kpi-card
+      title="Active Users"
+      [value]="kpiData.activeUsers"
+      icon="group"
+      colorClass="color-blue"
+      format="number"
+      [trend]="12"
+    >
+    </app-kpi-card>
 
 
+    <app-kpi-card
+      title="System Health"
+      [value]="kpiData.systemHealth"
+      icon="health_and_safety"
+      colorClass="color-green"
+      format="percentage"
+      [trend]="2"
+    >
+    </app-kpi-card>
+
+    <app-kpi-card
+      title="Response Time"
+      [value]="kpiData.responseTime"
+      icon="speed"
+      colorClass="color-orange"
+      format="ms"
+      [trend]="-8"
+    >
+    </app-kpi-card>
   </section>
 </div>

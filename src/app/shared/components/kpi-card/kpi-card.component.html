@@ -1,0 +1,20 @@
+<div class="kpi-card" [ngClass]="colorClass" role="region" [attr.aria-label]="title + ' KPI Card'">
+  <div class="kpi-icon">
+    <span class="material-icons">{{ icon }}</span>
+  </div>
+
+  <div class="kpi-content">
+    <span class="kpi-label">{{ title }}</span>
+    <span class="kpi-value">{{ formattedValue }}</span>
+    <span *ngIf="suffix" class="kpi-suffix">{{ suffix }}</span>
+  </div>
+
+  <div
+    *ngIf="trend !== undefined"
+    class="kpi-trend"
+    [ngClass]="trend > 0 ? 'trend-up' : 'trend-down'"
+  >
+    <span class="material-icons trend-icon">{{ trend > 0 ? 'trending_up' : 'trending_down' }}</span>
+    <span class="trend-value">{{ trend > 0 ? '+' : '' }}{{ trend }}%</span>
+  </div>
+</div>

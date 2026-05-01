@@ -26,7 +26,7 @@ export class AuthService {
 
 
   login(credentials: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${environment.apiBaseUrl}/auth/login`, credentials).pipe(
+    return this.http.post<LoginResponse>(`${environment.apiUrl}/auth/login`, credentials).pipe(
       tap(response => {
         this.storeToken(response.token);
         this.storeUser(response.user);
