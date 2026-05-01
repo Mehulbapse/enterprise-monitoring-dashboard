@@ -23,7 +23,6 @@
     >
     </app-kpi-card>
 
-
     <app-kpi-card
       title="System Health"
       [value]="kpiData.systemHealth"
@@ -43,5 +42,29 @@
       [trend]="-8"
     >
     </app-kpi-card>
+  </section>
+
+  <!-- chart rows -->
+
+  <section class="charts-row" aria-label="Dashboardd Charts">
+    <div class="chart-card chart-wide">
+      <h3>Real-Time System Load</h3>
+      <app-chart *ngIf="lineChartConfig" chartType="line" [config]="lineChartConfig" height="280px">
+      </app-chart>
+    </div>
+
+    <div class="chart-card">
+      <h3>System Metrics</h3>
+
+      <app-chart *ngIf="barChartConfig" chartType="bar" [config]="barChartConfig" height="280px">
+      </app-chart>
+    </div>
+
+    <div class="chart-card">
+      <h3>Alert Distribution</h3>
+
+      <app-chart *ngIf="pieChartConfig" chartType="pie" [config]="pieChartConfig" height="280px">
+      </app-chart>
+    </div>
   </section>
 </div>

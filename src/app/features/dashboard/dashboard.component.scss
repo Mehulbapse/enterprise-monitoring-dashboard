@@ -17,3 +17,29 @@
   grid-template-columns: repeat(4,1fr);
   gap: 16px;
 }
+
+
+.charts-row{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap:16px
+}
+
+.chart-wide{
+  grid-column: 1/-1;
+}
+
+
+.chart-card{
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding:  20px;
+
+    h3{
+      margin: 0 0 16px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text--primary);
+    }
+}
