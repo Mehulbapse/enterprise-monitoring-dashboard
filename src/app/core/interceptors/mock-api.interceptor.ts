@@ -1,8 +1,10 @@
 import { HttpInterceptorFn, HttpRequest, HttpHandlerFn, HttpResponse } from '@angular/common/http';
 import { LoginResponse } from '@core/models/auth.model';
 import {
+  Alert,
   AlertDistribution,
   KpiData,
+  PaginatedResponse,
   SystemMetric,
   TimeSeriesPoint,
 } from '@core/models/dashboard.model';
@@ -25,7 +27,7 @@ export const mockApiInterceptor: HttpInterceptorFn = (
   if (url.includes('/dashboard/timeseries')) return handleTimeSeries();
   if (url.includes('/dashboard/metrics')) return handleMetrics();
   if (url.includes('/dashboard/distribution')) return handleDistribution();
-
+  if (url.includes('/dashboard/alerts')) return handleAlerts(req);
   return next(req);
 };
 
@@ -144,6 +146,116 @@ function handleDistribution(): Observable<HttpResponse<AlertDistribution[]>> {
     },
   ];
   return of(new HttpResponse({ status: 200, body: distribution })).pipe(delay(250));
+}
+
+function handleAlerts(
+  req: HttpRequest<unknown>
+): Observable<HttpResponse<PaginatedResponse<Alert>>> {
+  console.log(req);
+  const params = req.params;
+  const page = parseInt(params.get('page') || '1', 10);
+  const pageSize = parseInt(params.get('pageSize') || '10', 10);
+
+  const search = params.get('search') || '';
+  const severity = params.get('severity') || 'all';
+  const status = params.get('status') || 'all';
+  const sortBy = params.get('sortBy') || 'timestamp';
+  const sortDir = params.get('sortDir') || 'desc';
+
+  let alerts = generateMockAlerts();
+
+  if (search) {
+    const lowerSearch = search.toLowerCase();
+    alerts = alerts.filter(
+      (a) =>
+        a.message.toLowerCase().includes(lowerSearch) ||
+        a.source.toLowerCase().includes(lowerSearch) ||
+        a.id.toLowerCase().includes(lowerSearch)
+    );
+  }
+
+  if (severity !== 'all') {
+    alerts = alerts.filter((a) => a.severity === severity);
+  }
+
+  if (status !== 'all') {
+    alerts = alerts.filter((a) => a.status === status);
+  }
+
+  alerts.sort((a, b) => {
+    const valA = a[sortBy as keyof Alert];
+    const valB = b[sortBy as keyof Alert];
+    if (valA === undefined || valB === undefined) return 0;
+    const comparison = valA < valB ? -1 : valA > valB ? 1 : 0;
+    return sortDir === 'asc' ? comparison : -comparison;
+  });
+
+  //pagination
+
+  const total = alerts.length;
+  const startIndex = (page - 1) * pageSize;
+  const paginatedAlerts = alerts.slice(startIndex, startIndex + pageSize);
+
+  const response: PaginatedResponse<Alert> = {
+    data: paginatedAlerts,
+    total,
+    page,
+    pageSize,
+  };
+
+  return of(new HttpResponse({ status: 200, body: response })).pipe(delay(300));
+}
+
+function generateMockAlerts(): Alert[] {
+  const severities: Array<'critical' | 'warning' | 'info'> = ['critical', 'warning', 'info'];
+
+  const statuses: Array<'active' | 'acknowledged' | 'resolved'> = [
+    'active',
+    'acknowledged',
+    'resolved',
+  ];
+
+  const sources = ['Web Server', 'Database', 'Cache', 'API Gateway', 'Auth Service', 'Worker'];
+
+  const messages = [
+    'High CPU usage detected',
+    'Memory usage exceeded threshold',
+    'Disk space running low',
+    'Network latency increased',
+    'Unauthorized login attempt',
+    'SSL certificate expiring soon',
+    'Database connection errors',
+    'Application errors spiked',
+    'Service response time degraded',
+    'Hardware failure predicted',
+    'Backup job failed',
+    'High error rate detected',
+    'Configuration change detected',
+    'Resource utilization high',
+    'Security vulnerability found',
+    'Firewall rule violation',
+    'DNS resolution timeout',
+    'API rate limit exceeded',
+    'Unexpected shutdown',
+    'Data integrity issue detected',
+  ];
+
+  const assignees = ['Alice', 'Bob', 'Charlie', 'David', 'Eve', undefined];
+  const alerts: Alert[] = [];
+
+  for (let i = 1; i <= 50; i++) {
+    alerts.push({
+      id: `ALT-${String(1000 + i).padStart(4, '0')}`,
+      message: messages[i % messages.length],
+      severity: severities[i % severities.length],
+      status: statuses[i % statuses.length],
+      source: sources[i % sources.length],
+      timestamp: new Date(Date.now() - i * 3600000),
+      assignee: assignees[i % assignees.length],
+    });
+  }
+
+  return alerts;
 }
 
 function randomInt(arg0: number, arg1: number) {

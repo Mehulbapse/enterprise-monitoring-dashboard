@@ -1,0 +1,78 @@
+<div class="table-wrapper">
+  <div *ngIf="data.length === 0 && !loading" class="empty-state">
+    <p class="empty-message">No data available</p>
+  </div>
+
+
+<div *ngIf="loading" class="loading-state">
+  <div class="spinner"></div>
+  <p>Loading data...</p>
+</div>
+
+<!-- Table -->
+
+<table *ngIf="data.length > 0 && !loading" class="data-table">
+  <thead>
+    <tr>
+      <th
+        *ngFor="let col of columns; trackBy: trackByColumn"
+        [style.width]="col.width || 'auto'"
+        [class.sortable]="col.sortable"
+        [attr.aria-sort]="getAriaSort(col.key)"
+        (click)="col.sortable ? onSort(col.key) : null"
+        (keydown.enter)="col.sortable ? onSort(col.key) : null"
+        [attr.tabindex]="col.sortable ? '0' : null"
+        [attr.role]="'columnheader'"
+      >
+        {{ col.label }}
+        <span *ngIf="col.sortable" class="sort-icon">
+          <span *ngIf="currentSort?.column === col.key">
+            {{ currentSort?.direction === 'asc' ? '&#9650;' : '&#9660;' }}
+          </span>
+          <span *ngIf="currentSort?.column !== col.key" class="sort-inactive">&#8645;</span>
+        </span>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let row of data; trackBy: trackByRow" [attr.role]="'row'">
+      <td *ngFor="let col of columns; trackBy: trackByColumn" [attr.role]="'cell'">
+        <span *ngIf="col.type === 'badge'" class="badge" [ngClass]="'badge-' + row[col.key]">
+          {{ row[col.key] }}
+        </span>
+
+        <span *ngIf="col.type == 'date'">{{ $any(row[col.key]) | date : 'short' }}</span>
+
+        <span *ngIf="!col.type || col.type === 'text' || col.type === 'number'"
+          >{{ row[col.key] }}
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<!-- pagination -->
+
+<div *ngIf="totalItems > 0" class="pagination" role="navigation" aria-label="Pagination Navigation">
+  <span class="pagination-info"> Showing {{ startItem }} - {{ endItem }} of {{ totalItems }} </span>
+  <div class="pagination-controls">
+    <button
+      (click)="onPageChange(currentPage - 1)"
+      [disabled]="currentPage === 1"
+      aria-label="Previous Page",
+       class="page-btn"
+    >
+      < Prev
+    </button>
+    <span class="page-indicator"> Page {{ currentPage }} of {{ totalPages }}</span>
+    <button
+      (click)="onPageChange(currentPage + 1)"
+      [disabled]="currentPage === totalPages"
+      aria-label="Next Page"
+      class="page-btn"
+    >
+      Next >
+    </button>
+  </div>
+</div>

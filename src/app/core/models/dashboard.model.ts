@@ -34,8 +34,52 @@ export interface SystemMetric {
   network: number;
 }
 
-export interface AlertDistribution{
-  category : string;
-  count : number;
-  color : string;
+export interface AlertDistribution {
+  category: string;
+  count: number;
+  color: string;
+}
+
+export interface TableColumn {
+  key: string;
+  label: string;
+  sortable?: boolean;
+  type?: 'text' | 'date' | 'badge' | 'number';
+  width?: string;
+}
+
+export interface SortState {
+  column: string;
+  direction: 'asc' | 'desc';
+}
+
+export type AlertSeverity = 'critical' | 'warning' | 'info';
+
+export interface Alert {
+  id: string;
+  message: string;
+  severity: AlertSeverity;
+  status: AlertStatus;
+  source: string;
+  timestamp: Date;
+  assignee?: string;
+}
+
+export interface DashboardFilters {
+  search: string;
+  severity: AlertSeverity | 'all';
+  status: AlertStatus | 'all';
+  dateRange: {
+    start: Date | null;
+    end: Date | null;
+  };
+}
+
+export type AlertStatus = 'active' | 'acknowledged' | 'resolved';
+
+export interface PaginatedResponse<T> {
+  data: T[];
+  total: number;
+  page: number;
+  pageSize: number;
 }

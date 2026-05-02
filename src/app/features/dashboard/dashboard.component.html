@@ -1,5 +1,9 @@
 <div class="dashboard">
-  <div *ngIf=""></div>
+  <div *ngIf="error$ | async as error" class="error-banner" role="alert">
+    <span class="material-icons error-icon">warning</span>
+    {{ error }}
+    <button (click)="dismissError()" class="dismiss-btn" aria-label="Dismiss Error"></button>
+  </div>
 
   <!-- KPI Cards Rows -->
   <section class="kpi-row" aria-label="Key Performance Indicators">
@@ -66,5 +70,66 @@
       <app-chart *ngIf="pieChartConfig" chartType="pie" [config]="pieChartConfig" height="280px">
       </app-chart>
     </div>
+  </section>
+
+  <!-- Filters Row -->
+
+  <section class="filters-row" aria-label="Dashboard Filters">
+    <div class="filter-group">
+      <div class="search-wrapper">
+        <span class="material-icons search-icon">search</span>
+        <input
+          type="text"
+          placeholder="Search alerts..."
+          [formControl]="searchControls"
+          class="search-input"
+          aria-label="Search Alerts"
+        />
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <select
+        [formControl]="severityControls"
+        class="filter-select"
+        aria-label="Filter by Severity"
+      >
+        <option value="all">All Severities</option>
+        <option value="critical">Critical</option>
+        <option value="warning">Warning</option>
+        <option value="info">Info</option>
+      </select>
+
+      <select [formControl]="statusControls" class="filter-select" aria-label="Filter by Status">
+        <option value="all">All Statuses</option>
+        <option value="active">Active</option>
+        <option value="acknowledged">Acknowledged</option>
+        <option value="resolved">Resolved</option>
+      </select>
+
+      <button (click)="resetFilters()" class="reset-btn" aria-label="Reset Filters">
+        <span class="material-icons">refresh</span>
+        Reset
+      </button>
+    </div>
+  </section>
+
+  <!-- Alerts Table -->
+
+  <section class="table-section" aria-label="Alerts Table">
+    <h3>Recent Alerts</h3>
+
+    <app-data-table
+      [columns]="tableColumns"
+      [data]="alertsData"
+      [loading]="tableLoading"
+      [totalItems]="totalAlerts"
+      [currentPage]="currentPage"
+      [pageSize]="pageSize"
+      [currentSort]="currentSort"
+      (pageChange)="onPageChange($event)"
+      (sortChange)="onSortChange($event)"
+    >
+    </app-data-table>
   </section>
 </div>

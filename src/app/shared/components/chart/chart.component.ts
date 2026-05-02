@@ -48,7 +48,7 @@ export class ChartComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
   constructor(private themeService: ThemeService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    console.log(this.canvasRef);
+    // console.log(this.canvasRef);
     this.themeService.theme$.pipe(takeUntil(this.destroy$)).subscribe((theme) => {
       this.currentTheme = theme;
       if (this.chart) {
@@ -94,7 +94,7 @@ export class ChartComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
     const textColor = this.currentTheme === 'dark' ? '#e0e0e0' : '#333333';
     const gridColor = this.currentTheme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
 
-    console.log(this.canvasRef);
+    // console.log(this.canvasRef);
     this.chart = new Chart(this.canvasRef.nativeElement, {
       type: this.chartType,
       data: {
