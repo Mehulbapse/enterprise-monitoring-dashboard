@@ -1,59 +1,182 @@
-# EnterpriseMonitoringDashboard
+# Enterprise Monitoring Dashboard
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
+A comprehensive Angular-based monitoring dashboard for enterprise system health, alerts management, and real-time metrics visualization. This application provides administrators with a centralized view of system performance, critical alerts, and user activity.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **Real-Time Dashboard**: Displays KPI cards showing Total Alerts, Active Users, System Health, and Response Time
+- **Interactive Charts**:
+  - Line chart for real-time system load
+  - Bar chart for system metrics (CPU, Memory, Disk)
+  - Pie chart for alert distribution
+- **Alert Management**:
+  - Filterable alerts table with search, severity, and status filters
+  - Pagination support with dynamic page reset on filter changes
+  - Sortable columns
+- **User Authentication**: Login system with JWT token support
+- **Theme Management**: Support for light/dark theme switching
+- **Responsive Design**: Mobile-friendly UI with SCSS styling
+- **Mock API Integration**: Built-in mock API interceptor for development
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── core/                          # Core functionality
+│   │   ├── guards/                    # Route guards (auth)
+│   │   ├── interceptors/              # HTTP interceptors (auth, mock API)
+│   │   ├── models/                    # TypeScript interfaces and models
+│   │   └── services/                  # Core services (auth, dashboard, theme)
+│   ├── features/                      # Feature modules
+│   │   ├── auth/                      # Authentication module
+│   │   │   └── login/                 # Login component
+│   │   └── dashboard/                 # Dashboard module
+│   ├── shared/                        # Shared components
+│   │   └── components/                # Reusable UI components
+│   │       ├── chart/                 # Chart component
+│   │       ├── data-table/            # Data table component
+│   │       └── kpi-card/              # KPI card component
+│   └── layout/                        # Layout components
+│       └── header/                    # Header component
+└── environments/                      # Environment configurations
+```
+
+## Technologies Used
+
+- **Angular 21.2.10**: Standalone components and latest Angular features
+- **TypeScript 5.9.2**: Strong typing and modern JavaScript features
+- **RxJS 7.8**: Reactive programming with Observables
+- **Chart.js 4.5.1**: Interactive chart library
+- **SCSS**: Advanced styling with variables and mixins
+- **Reactive Forms**: Reactive form handling for filters and search
+- **npm 10.8.2**: Package manager
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18.0.0 or higher)
+- npm (v10.8.2 or higher)
+
+### Installation
+
+1. Clone the repository:
 
 ```bash
+git clone <repository-url>
+cd enterprise-monitoring-dashboard
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+### Development Server
+
+Start the development server:
+
+```bash
+npm start
+# or
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Navigate to `http://localhost:4200/`. The application will automatically reload when you modify source files.
 
-## Code scaffolding
+### Building for Production
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Build the project for production:
 
 ```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
+npm run build
+# or
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+## Key Features Explained
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### Dashboard
 
-```bash
-ng test
+- **KPI Cards**: Quick overview of system metrics
+- **Charts**: Visual representation of system load, metrics, and alert distribution
+- **Alerts Table**: Detailed view of all alerts with filtering capabilities
+
+### Alert Filtering
+
+- **Search**: Search by alert message, source, or ID
+- **Severity Filter**: Filter by Critical, Warning, or Info levels
+- **Status Filter**: Filter by Active, Acknowledged, or Resolved status
+- **Smart Pagination**: Automatically resets to page 1 when filters change
+
+### Authentication
+
+- Login with username and password
+- JWT token-based authentication
+- Protected routes with auth guards
+
+## API Integration
+
+The application uses a mock API interceptor for development. The interceptor handles:
+
+- `/auth/login` - User authentication
+- `/dashboard/kpi` - KPI data
+- `/dashboard/timeseries` - Time series data for line chart
+- `/dashboard/metrics` - System metrics for bar chart
+- `/dashboard/distribution` - Alert distribution data
+- `/dashboard/alerts` - Paginated alerts with filtering and sorting
+
+### Mock Interceptor
+
+Project Used Mock Interceptor for data
+
+## Configuration
+
+### Environment Variables
+
+Update `src/environments/environments.ts` for development and `src/environments/environments.prod.ts` for production:
+
+```typescript
+export const environment = {
+  apiUrl: 'http://localhost:3000/api',
+  refreshInterval: 30000, // Auto-refresh interval in ms
+};
 ```
 
-## Running end-to-end tests
+## Best Practices Implemented
 
-For end-to-end (e2e) testing, run:
+- **Standalone Components**: Modern Angular component architecture
+- **Reactive Programming**: RxJS observables for data flow
+- **Change Detection Strategy**: OnPush for performance optimization
+- **Type Safety**: Full TypeScript typing throughout the application
+- **Code Organization**: Feature-based folder structure
+- **Reusable Components**: Shared components for UI consistency
 
-```bash
-ng e2e
-```
+## Known Issues & Fixes
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+- Fixed: `setUpAlertStream` method not being called (was missing parentheses)
+- Fixed: Status filter sending wrong value to API
+- Fixed: Pagination not resetting on filter changes
+- Fixed: Mismatch between filter options and mock data values
 
-## Additional Resources
+## Future Enhancements
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Real backend API integration
+- Advanced filtering with date range
+- Export alerts to CSV/PDF
+- Dashboard customization and widgets
+- Real-time WebSocket updates
+- User preference saving
+- Mobile app version
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Support
+
+For issues and questions, please create an issue in the repository or contact the development team.
